@@ -25,37 +25,18 @@
 			<h3 class="hndle">Utilisation</h3>
 			<div class="inside">
 				<p>Utiliser le shortcode <em>[datalizer]</em> là où vous voulez insérer la visualisation</p>
+				<p>
+					Les données doivent être envoyé à l'URL <votresite>/wp-admin/admin-ajax.php en POST.<br />
+					Elles doivent être formatées de la manière suivant :<br />
+					{
+					    'action': 'menthe_setData',
+					  'donnee' : donnee,
+					  'valeur' : valeur
+					}
+				</p>
 			</div>
 		</div>
 
-		<div class="postbox">
-				<h3 class="hndle">Visualisation</h3>
-				<div class="inside">
-					<div id="datalizer">
-						<script type="text/javascript">
-							// config
-						</script>
-						<div class="loaderLayout">Chargement ...</div>
-						<canvas id="graph" width="100%"></canvas>
-						<form id="settings">
-							<select id="interval">
-							    <option value="535680">Un an</option>
-								<option value="267840">6 mois</option>
-								<option value="133920">3 mois</option>
-								<option value="44640">1 mois</option>
-								<option value="10080" selected="true">1 semaine</option>
-								<option value="1440">24 heures</option>
-							</select>
-							<input type="text" id="dateFin" value="NOW">
-							
-							<table id="dataSelect">
-							</table>
-						</form>
-						<div id="ajaxOut"></div>
-					</div>
-				</div>
-			</div>
-
-		</div>
+		
 
 </div><!-- .wrap -->
