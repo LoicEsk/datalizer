@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: datalizer
+Plugin Name: Datalizer
 Plugin URI: https://github.com/LoicEsk/datalizer
 Description: A plugin to view and analayse physical data
 Version: 0.1.0
@@ -14,8 +14,9 @@ GitHub Plugin URI: https://github.com/LoicEsk/datalizer
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 // variables globales
-global $menth_db_version;
-$menth_db_version = get_option( "datalizer_db_version" );
+global $wpdb;
+global $datalizer_db_version;
+$datalizer_db_version = get_option( "datalizer_db_version" );
 global $datalizer_table;
 $datalizer_table = $wpdb->prefix . 'data_datalizer';
 
@@ -113,9 +114,9 @@ add_shortcode( 'datalizer', 'shortcode_datalizer' );
 
 // Installation
 // création des bases de données
-function menth_install() {
+function datalizer_install() {
 	global $wpdb;
-	global $menth_db_version;
+	global $datalizer_db_version;
 
 	global $datalizer_table;
 	$table_name = $datalizer_table;
@@ -133,7 +134,7 @@ function menth_install() {
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta( $sql );
 
-	add_option( 'menth_db_version', '1.0' );
+	add_option( 'datalizer_db_version', '1.0' );
 }
-register_activation_hook( __FILE__, 'menth_install' );
+register_activation_hook( __FILE__, 'datalizer_install' );
 
