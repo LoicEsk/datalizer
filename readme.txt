@@ -10,5 +10,8 @@ This plugin is hosted on github. You can use the GitHub Updater to install and u
 
 == Changelog ==
 
+= 0.2 =
+Hold visualisation data lines to draw on client side
+
 = 0.1 =
-The first version.
+The first version
