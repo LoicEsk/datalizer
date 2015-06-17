@@ -29,7 +29,7 @@
 					Les données doivent être envoyé à l'URL <votresite>/wp-admin/admin-ajax.php en POST.<br />
 					Elles doivent être formatées de la manière suivant :<br />
 					{
-					    'action': 'menthe_setData',
+					    'action': 'datalizer_setData',
 					  'donnee' : donnee,
 					  'valeur' : valeur
 					}

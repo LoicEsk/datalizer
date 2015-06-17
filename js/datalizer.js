@@ -151,11 +151,27 @@ jQuery(document).ready(function($) {
       // tri des lignes
       newLines.sort();
       for(var i in newLines){
-        console.log('Insertion de %s', newLines[i]);
-        var cmd = $('<tr/>').html('<th><input class="' + newLines[i] + '" type="checkbox" checked="true">'+ newLines[i] + '</th><td class="' + newLines[i] + '"></td>');
+        //console.log('Insertion de %s', newLines[i]);
+        
+        // initialisation en fonction des données client
+        var selected = $.cookie(newLines[i] + 'selected');
+        console.log('lecture cookie "%s" = %s', newLines[i], selected);
+        if(selected == undefined) selected = 'true';
+
+        // ajout au DOM
+        if(selected == 'true'){
+           var cmd = $('<tr/>').html('<th><input class="' + newLines[i] + '" type="checkbox" checked>'+ newLines[i] + '</th><td class="' + newLines[i] + '"></td>');
+        }else{
+          var cmd = $('<tr/>').html('<th><input class="' + newLines[i] + '" type="checkbox" >'+ newLines[i] + '</th><td class="' + newLines[i] + '"></td>');
+        }
         zoneSetting.append(cmd);
+
+        // event on change
         $('#settings input.'+newLines[i]).change(function(){
-          //console.log('Changement de ' + $(this).attr('class'));
+          var optionName = $(this).attr('class');
+          var checked = $(this).is(':checked');
+          //console.log('%s is checked ? %s', optionName, checked);
+          $.cookie(optionName + 'selected', checked);
           drawGraph();
         })
       }

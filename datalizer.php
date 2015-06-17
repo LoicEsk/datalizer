@@ -21,7 +21,7 @@ global $datalizer_table;
 $datalizer_table = $wpdb->prefix . 'data_datalizer';
 
 // hooks ajax
-add_action( 'wp_ajax_datalizer_getData', 'datalizer_getData' ); // hook pour l'admin
+add_action( 'wp_ajax_nopriv_datalizer_getData', 'datalizer_getData' ); // hook pour l'admin
 function datalizer_getData() {
 	global $wpdb; // this is how you get access to the database
 	global $datalizer_table;
@@ -71,7 +71,8 @@ function datalizer_enqueue($hook) {
 	wp_enqueue_style('datalizer-css', plugins_url( '/template/datalizer.css', __FILE__ ));
 	
 	// js
-	wp_enqueue_script( 'ajax-script', plugins_url( '/js/datalizer.js', __FILE__ ), array('jquery') );
+	wp_enqueue_script( 'jquery-cookie', plugins_url('js/jquery.cookie.js', __FILE__), array('jquery') );
+	wp_enqueue_script( 'ajax-script', plugins_url( '/js/datalizer.js', __FILE__ ), array('jquery', 'jquery-cookie') );
 
 	// in JavaScript, object properties are accessed as ajax_object.ajax_url, ajax_object.we_value
 	wp_localize_script( 'ajax-script', 'datalizer_vars',

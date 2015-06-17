@@ -10,5 +10,5 @@ This plugin is hosted on github. You can use the GitHub Updater to install and u
 
 == Changelog ==
 
-= 0.1.x =
+= 0.1 =
 The first version.
