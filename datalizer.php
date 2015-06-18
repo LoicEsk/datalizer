@@ -21,7 +21,8 @@ global $datalizer_table;
 $datalizer_table = $wpdb->prefix . 'data_datalizer';
 
 // hooks ajax
-add_action( 'wp_ajax_nopriv_datalizer_getData', 'datalizer_getData' ); // hook pour l'admin
+add_action( 'wp_ajax_datalizer_getData', 'datalizer_getData' ); // hook pour l'admin
+add_action( 'wp_ajax_nopriv_datalizer_getData', 'datalizer_getData' ); // hook pour l'accès public
 function datalizer_getData() {
 	global $wpdb; // this is how you get access to the database
 	global $datalizer_table;

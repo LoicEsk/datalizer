@@ -171,7 +171,7 @@ jQuery(document).ready(function($) {
           var optionName = $(this).attr('class');
           var checked = $(this).is(':checked');
           //console.log('%s is checked ? %s', optionName, checked);
-          $.cookie(optionName + 'selected', checked);
+          $.cookie(optionName + 'selected', checked, { expires: 30 });
           drawGraph();
         })
       }
