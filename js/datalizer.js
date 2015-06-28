@@ -37,15 +37,22 @@ jQuery(document).ready(function($) {
       /*$('#graph').width($('#ajaxOut').width());
       $('#graph').height($('#graph').width() * 1/2);*/
       
-      var dateNow = new Date();
+      /*var dateNow = new Date();
       var time1an = 1000 * 60 * 60 * 24 * 365;
       //var time1mois = 1000 * 60 * 60 * 24 * 30; // pour les tests avec moins de valeurs
       var fromTime = dateNow.getTime() - time1an;
       var fromDate = new Date(fromTime);
       
       dataStorage.fromDate = fromDate;
-      dataStorage.toDate = dateNow;
-      
+      dataStorage.toDate = dateNow;*/
+
+      // initialisation des controles
+      var duree_select = $.cookie('duree');
+      //console.log('Initialisation du graph pour un affichage de %d secondes', duree_select);
+      $('#interval option').each( function(index){
+      	if($(this).val() == duree_select) $(this).prop('selected', true);
+      });
+
       getData();
       
       // refresh automatique
@@ -64,10 +71,14 @@ jQuery(document).ready(function($) {
     }
     
     $('#interval').change(function(){
-      // mise à jour des infos
-      drawGraph();
-      // mise à jour des données
-      getData();
+    	// enregistrement des nouveau parametres
+    	var duree_select = $("#interval").val();
+        $.cookie('duree', duree_select, { expires: 30 });
+
+     	// mise à jour des infos
+     	drawGraph();
+     	// mise à jour des données
+     	getData();
     })
     
     function getData(){
