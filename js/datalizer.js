@@ -72,12 +72,17 @@ jQuery(document).ready(function($) {
 
 	// save param on exit page
 	$(window).unload(function(){
-		 $('#dataSelect input').each(function(index){
-		 	var optionName = $(this).attr('class');
+		// sauvegadre de la plage d'affichage
+		var duree_select = $("#interval").val();
+        $.cookie('duree', duree_select, { expires: 30 });
+
+        // sauvegarde des ligne à afficher
+		$('#dataSelect input').each(function(index){
+			var optionName = $(this).attr('class');
 		 	var valeur = $(this).is(':checked');
 		 	//console.log('sauvegarde de %s -> %s', optionName, valeur);
 		 	$.cookie(optionName + 'selected', valeur, { expires: 30 });
-		 });
+		});
 	});
     
     $('#interval').change(function(){
