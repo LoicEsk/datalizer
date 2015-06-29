@@ -69,6 +69,16 @@ jQuery(document).ready(function($) {
       });
       $(window).trigger('resize');
     }
+
+	// save param on exit page
+	$(window).unload(function(){
+		 $('#dataSelect input').each(function(index){
+		 	var optionName = $(this).attr('class');
+		 	var valeur = $(this).is(':checked');
+		 	//console.log('sauvegarde de %s -> %s', optionName, valeur);
+		 	$.cookie(optionName + 'selected', valeur, { expires: 30 });
+		 });
+	});
     
     $('#interval').change(function(){
     	// enregistrement des nouveau parametres
