@@ -52,8 +52,7 @@ function datalizer_setData() {
 		$valeur 
 	));
 
-	echo('La requete : ');
-	printf("INSERT INTO $datalizer_table VALUES ( '', %s, %s, %s )", $date, $nom, $valeur );
+	printf("Données reçues : %s : %s = %s )", $date, $nom, $valeur );
 
 	wp_die();
 }

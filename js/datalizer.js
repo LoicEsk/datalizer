@@ -4,18 +4,19 @@
 // console.log('Datalizer présent !!');
 
 var dataStorage = {
-  fromDate : new Date(),
-  toDate : new Date(),
-  data : []
+  data : [],
+  couleurs : []
 }
+var couleurs = []; // les couleurs des lignes
 
-var couleurs = [
-  "aqua  ", 
-  "black  ", 
-  "blue  ", 
+// Les couleurs disponibles
+var bddCouleurs = [
+  "aqua", 
+  "black", 
+  "blue", 
   "fuchsia", 
-  "gray  ", 
-  "green  ", 
+  "gray", 
+  "green", 
   "lime", 
   "maroon", 
   "navy", 
@@ -29,7 +30,9 @@ var couleurs = [
  ];
 
 jQuery(document).ready(function($) {
-    
+    // initialisation cookie
+    // ajouter une lecture du cookie couleurs
+
 
     if(document.getElementById('datalizer')){
       
@@ -83,6 +86,8 @@ jQuery(document).ready(function($) {
 		 	//console.log('sauvegarde de %s -> %s', optionName, valeur);
 		 	$.cookie(optionName + 'selected', valeur, { expires: 30 });
 		});
+
+    recCouleurs();
 	});
     
     $('#interval').change(function(){
@@ -181,7 +186,7 @@ jQuery(document).ready(function($) {
         
         // initialisation en fonction des données client
         var selected = $.cookie(newLines[i] + 'selected');
-        console.log('lecture cookie "%s" = %s', newLines[i], selected);
+        //console.log('lecture cookie "%s" = %s', newLines[i], selected);
         if(selected == undefined) selected = 'true';
 
         // ajout au DOM
@@ -191,6 +196,11 @@ jQuery(document).ready(function($) {
           var cmd = $('<tr/>').html('<th><input class="' + newLines[i] + '" type="checkbox" >'+ newLines[i] + '</th><td class="' + newLines[i] + '"></td>');
         }
         zoneSetting.append(cmd);
+
+        // mise en couleur
+        var IDcouleur = Math.floor(Math.random() * (bddCouleurs.length));
+        dataStorage.couleurs[newLines[i]] = bddCouleurs[IDcouleur];
+        console.log('La ligne %s sera %s', newLines[i], dataStorage.couleurs[newLines[i]]);
 
         // event on change
         $('#settings input.'+newLines[i]).change(function(){
@@ -207,6 +217,10 @@ jQuery(document).ready(function($) {
         var derValeur = dataStorage.data[nom][dataStorage.data[nom].length -1].valeur;
         $('td.' + nom, zoneSetting).text(derValeur);
       }
+
+      // enregisrement des couleurs
+      console.log("Il y a %d couleurs", dataStorage.couleurs.length);
+      recCouleurs();
     }
     
     
@@ -268,7 +282,7 @@ jQuery(document).ready(function($) {
         var afficher = $('#settings input.'+nom).is(':checked');
         if(afficher){
           ctx.lineWidth = 2;
-          //ctx.strokeStyle = 'blue';
+          ctx.strokeStyle = dataStorage.couleurs[nom];
           ctx.beginPath();
           //console.log('série %s', nom);
           var lastTimeMin = 0;
@@ -297,7 +311,19 @@ jQuery(document).ready(function($) {
       }
       
     }
-});
+
+    function recCouleurs(){
+      var couleursStr = '{'
+      for(nom in dataStorage.couleurs){
+        console.log('%s -> %s', nom, dataStorage.couleurs[nom]);
+        couleursStr += '"' + nom + '":' + dataStorage.couleurs[nom] + ',';
+      }
+      //JSON.stringify(couleurs);
+      
+      //$.cookie('couleurs', couleurs, { expires: 30 });
+      console.log('Rec couleurs : %s', couleursStr);
+    }
+}); // FIN JQUERY
 
 function dateToString(dateObj){
 	var dateStr = padStr(dateObj.getFullYear()) + '-' +
