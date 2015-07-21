@@ -10,6 +10,10 @@ This plugin is hosted on github. You can use the GitHub Updater to install and u
 
 == Changelog ==
 
+= 0.2.2 =
+Réception de la date si transmise avec les données
+Mise en couleurs aléatoires des lignes
+
 = 0.2.1 =
 Mémorisation de la durée à afficher (côté client)
 + corrections de légers bugs

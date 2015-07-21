@@ -3,7 +3,7 @@
 Plugin Name: Datalizer
 Plugin URI: https://github.com/LoicEsk/datalizer
 Description: A plugin to view and analayse physical data
-Version: 0.2.1
+Version: 0.2.2
 Author: Loïc Laurent
 Author URI: http://loiclaurent.com
 License: GPLv2 or later
