@@ -41,7 +41,11 @@ function datalizer_setData() {
 	global $datalizer_table;
 	global $wpdb;
 
-	$date = date('Y-m-d H:i:s', time());
+	
+	if(!isset($_POST['date']))
+		$date = date('Y-m-d H:i:s', time());
+	else
+		$date = $_POST['date'];
 	$nom = $_POST['donnee'];
 	$valeur = $_POST['valeur'];
 
