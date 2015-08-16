@@ -1,7 +1,7 @@
 === Datalizer ===
 Contributors: Loïc Laurent
 Requires at least: 4.1.0
-Tested up to: 4.2.2
+Tested up to: 4.2.4
 
 WordPress plugin to save and analiyse datas from physical sensors
 
