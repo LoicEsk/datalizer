@@ -1,6 +1,6 @@
 <?php
 	// lecture des données
-	global $menth_db_version;
+	global $datalizer_db_version;
 	global $wpdb;
 	global $datalizer_table;
 
@@ -14,7 +14,7 @@
 			<h3 class="hndle">Infos plugin</h3>
 			<div class="inside">
 				<ul>
-					<li>Version bdd : <strong><?php echo($menth_db_version); ?></strong></li>
+					<li>Version bdd : <strong><?php echo($datalizer_db_version); ?></strong></li>
 					<li>Nom de la table : <strong><?php echo($datalizer_table); ?></strong></li>
 					<li>Nombre d'entrées : <strong><?php echo($compte); ?></strong></li>
 				</ul>
