@@ -302,6 +302,7 @@ jQuery(document).ready(function($) {
         if(afficher){
           ctx.lineWidth = 2;
           ctx.strokeStyle = dataStorage.couleurs[nom];
+          ctx.fillStyle = dataStorage.couleurs[nom];
           ctx.beginPath();
           //console.log('série %s', nom);
           var lastTimeMin = 0;
