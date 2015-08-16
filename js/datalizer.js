@@ -11,22 +11,18 @@ var couleurs = []; // les couleurs des lignes
 
 // Les couleurs disponibles
 var bddCouleurs = [
-  "aqua", 
-  "black", 
-  "blue", 
-  "fuchsia", 
-  "gray", 
-  "green", 
-  "lime", 
-  "maroon", 
-  "navy", 
-  "olive", 
+  "#FF6600", 
+  "#3A1402", 
+  "#990000", 
+  "#6187E5", 
+  "#8B06F2", 
+  "#060696", 
+  "#990066", 
+  "#00FF33", 
+  "#47315B", 
+  "#7EA319", 
   "purple", 
-  "red", 
-  "silver", 
-  "teal", 
-  "white", 
-  "yellow"
+  "red"
  ];
 
 jQuery(document).ready(function($) {
@@ -198,8 +194,23 @@ jQuery(document).ready(function($) {
         zoneSetting.append(cmd);
 
         // mise en couleur
-        var IDcouleur = Math.floor(Math.random() * (bddCouleurs.length));
-        dataStorage.couleurs[newLines[i]] = bddCouleurs[IDcouleur];
+        var coulorUsed = false;
+        var idBddColor = 0
+        while( idBddColor < bddCouleurs.length ){
+          for(var idUsedColor in couleurs){
+            if(bddCouleurs[idBddColor] == couleurs[idUsedColor]){
+              colorUsed = true;
+              break;
+            }
+          }
+          idBddColor ++;
+        }
+        // si on a épuisé toutes les couleurs disponibles on en choisi une au pif
+        if(idBddColor == bddCouleurs.length ){
+          idBddColor = Math.floor(Math.random() * (bddCouleurs.length));
+        }
+
+        dataStorage.couleurs[newLines[i]] = bddCouleurs[idBddColor];
         console.log('La ligne %s sera %s', newLines[i], dataStorage.couleurs[newLines[i]]);
 
         // event on change
