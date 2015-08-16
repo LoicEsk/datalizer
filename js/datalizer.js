@@ -187,9 +187,9 @@ jQuery(document).ready(function($) {
 
         // ajout au DOM
         if(selected == 'true'){
-           var cmd = $('<tr/>').html('<th><input class="' + newLines[i] + '" type="checkbox" checked>'+ newLines[i] + '</th><td class="' + newLines[i] + '"></td>');
+           var cmd = $('<tr/>').html('<th class="' + newLines[i] + '"><input class="' + newLines[i] + '" type="checkbox" checked>'+ newLines[i] + '</th><td class="' + newLines[i] + '"></td>');
         }else{
-          var cmd = $('<tr/>').html('<th><input class="' + newLines[i] + '" type="checkbox" >'+ newLines[i] + '</th><td class="' + newLines[i] + '"></td>');
+          var cmd = $('<tr/>').html('<th class="' + newLines[i] + '"><input class="' + newLines[i] + '" type="checkbox" >'+ newLines[i] + '</th><td class="' + newLines[i] + '"></td>');
         }
         zoneSetting.append(cmd);
 
@@ -209,8 +209,13 @@ jQuery(document).ready(function($) {
         if(idBddColor == bddCouleurs.length ){
           idBddColor = Math.floor(Math.random() * (bddCouleurs.length));
         }
-
+        // attribution de la couleur
         dataStorage.couleurs[newLines[i]] = bddCouleurs[idBddColor];
+        $('.' + newLines[i], zoneSetting).each(function(index){
+          var style = "color:" + bddCouleurs[idBddColor] + ";";
+          console.log('Ajout du style > %s', style);
+          $(this).attr('style', style);
+        });
         console.log('La ligne %s sera %s', newLines[i], dataStorage.couleurs[newLines[i]]);
 
         // event on change
