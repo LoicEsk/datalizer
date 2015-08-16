@@ -10,6 +10,10 @@ This plugin is hosted on github. You can use the GitHub Updater to install and u
 
 == Changelog ==
 
+== 0.3.0 ==
+(à venir)
+Affichage des valeurs au passage de la souris
+
 == 0.2.3 ==
 Choix de couleurs plus intelligent
 Mise en couleurs des nom de lignes de données
