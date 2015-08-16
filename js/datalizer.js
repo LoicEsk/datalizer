@@ -194,29 +194,32 @@ jQuery(document).ready(function($) {
         zoneSetting.append(cmd);
 
         // mise en couleur
-        var coulorUsed = false;
-        var idBddColor = 0
-        while( idBddColor < bddCouleurs.length ){
-          for(var idUsedColor in couleurs){
-            if(bddCouleurs[idBddColor] == couleurs[idUsedColor]){
+        var colorUsed = false;
+        var idBddColor = -1;
+        do{
+          colorUsed = false;
+          idBddColor ++;
+          for(var idUsedColor in dataStorage.couleurs){
+            if(bddCouleurs[idBddColor] == dataStorage.couleurs[idUsedColor]){
               colorUsed = true;
               break;
             }
           }
-          idBddColor ++;
-        }
+        }while( idBddColor < bddCouleurs.length && colorUsed );
+
         // si on a épuisé toutes les couleurs disponibles on en choisi une au pif
-        if(idBddColor == bddCouleurs.length ){
+        if(colorUsed){
+          console.log('Toutes les couleurs sont utilisée !');
           idBddColor = Math.floor(Math.random() * (bddCouleurs.length));
         }
         // attribution de la couleur
         dataStorage.couleurs[newLines[i]] = bddCouleurs[idBddColor];
         $('.' + newLines[i], zoneSetting).each(function(index){
           var style = "color:" + bddCouleurs[idBddColor] + ";";
-          console.log('Ajout du style > %s', style);
+          //console.log('Ajout du style > %s', style);
           $(this).attr('style', style);
         });
-        console.log('La ligne %s sera %s', newLines[i], dataStorage.couleurs[newLines[i]]);
+        console.log('La ligne %s sera %s (id=%d)', newLines[i], dataStorage.couleurs[newLines[i]], idBddColor);
 
         // event on change
         $('#settings input.'+newLines[i]).change(function(){
