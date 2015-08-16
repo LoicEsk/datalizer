@@ -3,7 +3,7 @@
 Plugin Name: Datalizer
 Plugin URI: https://github.com/LoicEsk/datalizer
 Description: A plugin to view and analayse physical data
-Version: 0.2.3
+Version: 0.2.4
 Author: Loïc Laurent
 Author URI: http://loiclaurent.com
 License: GPLv2 or later
@@ -95,7 +95,7 @@ function shortcode_datalizer($attr){
 		<script type="text/javascript">
 			// config
 		</script>
-		<div class="loaderLayout">Chargement ...</div>
+		<div class="loaderLayout"><span class="spinner"></span><br />Chargement ...</div>
 		<canvas id="graph" width="100%"></canvas>
 		<form id="settings">
 			<select id="interval">

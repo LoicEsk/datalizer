@@ -1,9 +1,46 @@
 /* CSS for the dataliser */
 
+#datalizer{
+	position: relative;
+}
+
 #datalizer canvas{
 	width: 100%;
 }
 
 #dataSelect{
 	text-align: left;
+}
+
+#datalizer .loaderLayout{
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	min-width: 2em;
+	background: rgba(255, 255, 255, 0.6);
+	text-align: center;
+	color: #3A1402;
+	font-weight: bold;
+}
+
+/* loader */
+.spinner {
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    border: solid 0.3em;
+    border-radius: 1em;
+    border-color: #3A1402 transparent #3A1402 transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

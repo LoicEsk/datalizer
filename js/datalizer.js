@@ -64,6 +64,9 @@ jQuery(document).ready(function($) {
           var hauteur = largeur * 1 / 2;
           canvas.height = hauteur;
           canvas.width = largeur;
+          var layerLoad = $("#datalizer .loaderLayout");
+          layerLoad.height(hauteur);
+          layerLoad.css('padding-top', (hauteur / 2 - 30)+'px');
           drawGraph();
       });
       $(window).trigger('resize');
