@@ -30,7 +30,7 @@
     width: 2em;
     height: 2em;
     border: solid 0.3em;
-    border-radius: 1em;
+    border-radius: 2em;
     border-color: #3A1402 transparent #3A1402 transparent;
     animation: spin 1s linear infinite;
 }

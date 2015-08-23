@@ -65,8 +65,10 @@ jQuery(document).ready(function($) {
           canvas.height = hauteur;
           canvas.width = largeur;
           var layerLoad = $("#datalizer .loaderLayout");
-          layerLoad.height(hauteur);
-          layerLoad.css('padding-top', (hauteur / 2 - 30)+'px');
+          var paddingTop = hauteur / 2 - 30;
+          layerLoad.css('padding-top', paddingTop +'px');
+          layerLoad.height((hauteur - paddingTop) + 'px');
+          
           drawGraph();
       });
       $(window).trigger('resize');
