@@ -349,6 +349,12 @@ jQuery(document).ready(function($) {
 
     function drawUserEvent(mousePos){
       var ctx = canvas.getContext("2d");
+
+      // couleur inteface
+      ctx.strokeStyle = "#3A1402";
+      ctx.fillStyle = "#3A1402";
+
+      // cercle position souris
       ctx.beginPath();
       ctx.arc(mousePos.x, mousePos.y, 5,0,2*Math.PI);
       ctx.stroke();
@@ -360,9 +366,26 @@ jQuery(document).ready(function($) {
       var intervalPx = canvas.width;
       var timeMouse = interval * mousePos.x / intervalPx;
       timeMouse += startTime;
+      timeMouse *= 60000;
+
+      /*console.log('interval = %d', interval);
+      console.log('endTime = %d', endTime);
+      console.log('startTime = %d', startTime);
+      console.log('intervalPx = %d', intervalPx);
+      console.log('timeMouse = %d', timeMouse);*/
+
+      var heightCanvas = canvas.height;
+
       var dateMouse = new Date(timeMouse);
-      var dateFormat = dateMouse.getHours() + ':' + dateMouse.getMinutes() + ':' + dateMouse.getSeconds();
-      ctx.fillText(dateMouse, mousePos.x + 10, mousePos.y + 10);
+      //var jourStr = dateMouse.getDate() + '/' + dateMouse.getMonth() + '/' + dateMouse.getFullYear();
+      //var heureStr = dateMouse.getHours() + ':' + dateMouse.getMinutes() + ':' + dateMouse.getSeconds();
+      ctx.fillText(dateToString(dateMouse), mousePos.x + 10, heightCanvas - 6);
+      ctx.beginPath();
+      var hauteurMouse = heightCanvas - mousePos.y;
+      ctx.moveTo(mousePos.x, mousePos.y + (hauteurMouse / 3));
+      ctx.lineTo(mousePos.x, heightCanvas);
+      ctx.stroke();
+
 
       // recherche des points à proximité
     }
@@ -370,13 +393,13 @@ jQuery(document).ready(function($) {
     function recCouleurs(){
       var couleursStr = '{'
       for(nom in dataStorage.couleurs){
-        console.log('%s -> %s', nom, dataStorage.couleurs[nom]);
-        couleursStr += '"' + nom + '":' + dataStorage.couleurs[nom] + ',';
+        //console.log('%s -> %s', nom, dataStorage.couleurs[nom]);
+        //couleursStr += '"' + nom + '":' + dataStorage.couleurs[nom] + ',';
       }
       //JSON.stringify(couleurs);
       
       //$.cookie('couleurs', couleurs, { expires: 30 });
-      console.log('Rec couleurs : %s', couleursStr);
+      //console.log('Rec couleurs : %s', couleursStr);
     }
 
     function getEndTimeGraph(){
