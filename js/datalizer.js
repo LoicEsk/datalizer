@@ -72,6 +72,24 @@ jQuery(document).ready(function($) {
           drawGraph();
       });
       $(window).trigger('resize');
+
+      // TRACKING SOURIS
+      function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      }
+      var canvas = document.getElementById('graph');
+      canvas.addEventListener('mousemove', function(evt) {
+        var mousePos = getMousePos(canvas, evt);
+        drawGraph();
+        drawUserEvent(mousePos);
+      }, false);
+      canvas.addEventListener('mouseout', function(){
+        drawGraph();
+      })
     }
 
 	// save param on exit page
@@ -253,15 +271,7 @@ jQuery(document).ready(function($) {
       
       // récupération des infos d'affichge
       var interval = $("#interval").val();
-      var dateFin = $('#dateFin').val();
-      //console.log('Interval = %d', interval);
-      //console.log('Date de fin : %s', dateFin);
-      
-      if(dateFin == "NOW"){
-        var endTime = new Date().getTime() / 60000;
-      }else{
-        var endTime = new Date().getTime() / 60000; // champs dans effet pour le moment
-      }
+      var endTime = getEndTimeGraph();
       
       var startTime = endTime - interval;
       //console.log('Time de debut : %d', startTime);
@@ -337,6 +347,26 @@ jQuery(document).ready(function($) {
       
     }
 
+    function drawUserEvent(mousePos){
+      var ctx = canvas.getContext("2d");
+      ctx.beginPath();
+      ctx.arc(mousePos.x, mousePos.y, 5,0,2*Math.PI);
+      ctx.stroke();
+
+      // convertion de l'odonnée en date
+      var interval = $("#interval").val();
+      var endTime = getEndTimeGraph();
+      var startTime = endTime - interval;
+      var intervalPx = canvas.width;
+      var timeMouse = interval * mousePos.x / intervalPx;
+      timeMouse += startTime;
+      var dateMouse = new Date(timeMouse);
+      var dateFormat = dateMouse.getHours() + ':' + dateMouse.getMinutes() + ':' + dateMouse.getSeconds();
+      ctx.fillText(dateMouse, mousePos.x + 10, mousePos.y + 10);
+
+      // recherche des points à proximité
+    }
+
     function recCouleurs(){
       var couleursStr = '{'
       for(nom in dataStorage.couleurs){
@@ -347,6 +377,16 @@ jQuery(document).ready(function($) {
       
       //$.cookie('couleurs', couleurs, { expires: 30 });
       console.log('Rec couleurs : %s', couleursStr);
+    }
+
+    function getEndTimeGraph(){
+      var dateFin = $('#dateFin').val();
+      if(dateFin == "NOW"){
+        var endTime = new Date().getTime() / 60000;
+      }else{
+        var endTime = new Date().getTime() / 60000; // champs dans effet pour le moment
+      }
+      return endTime;
     }
 }); // FIN JQUERY
 
