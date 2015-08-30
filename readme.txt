@@ -11,8 +11,7 @@ This plugin is hosted on github. You can use the GitHub Updater to install and u
 == Changelog ==
 
 == 0.3.0 ==
-(à venir)
-Affichage des valeurs au passage de la souris
+Affichage des valeurs au passage de la souris avec magnétisme sur la valeur plus proche
 
 == 0.2.4 ==
 Ajout d'un loader plus esthétique

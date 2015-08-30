@@ -195,7 +195,7 @@ jQuery(document).ready(function($) {
       for(var nom in dataStorage.data){
         if($('input.' + nom).length == 0){
           newLines.push(nom);
-          console.log('Nouvelle donnes "%s" trouvee', nom);
+          //console.log('Nouvelle donnes "%s" trouvee', nom);
         }
       }
       // tri des lignes
@@ -242,7 +242,7 @@ jQuery(document).ready(function($) {
           //console.log('Ajout du style > %s', style);
           $(this).attr('style', style);
         });
-        console.log('La ligne %s sera %s (id=%d)', newLines[i], dataStorage.couleurs[newLines[i]], idBddColor);
+        //console.log('La ligne %s sera %s (id=%d)', newLines[i], dataStorage.couleurs[newLines[i]], idBddColor);
 
         // event on change
         $('#settings input.'+newLines[i]).change(function(){
@@ -261,7 +261,7 @@ jQuery(document).ready(function($) {
       }
 
       // enregisrement des couleurs
-      console.log("Il y a %d couleurs", dataStorage.couleurs.length);
+      //console.log("Il y a %d couleurs", dataStorage.couleurs.length);
       recCouleurs();
     }
     
@@ -355,28 +355,24 @@ jQuery(document).ready(function($) {
       ctx.fillStyle = "#3A1402";
 
       // cercle position souris
-      ctx.beginPath();
+      /*ctx.beginPath();
       ctx.arc(mousePos.x, mousePos.y, 5,0,2*Math.PI);
-      ctx.stroke();
+      ctx.stroke();*/
 
-      // convertion de l'odonnée en date
+      // convertion de l'absice en date
       var interval = $("#interval").val();
       var endTime = getEndTimeGraph();
       var startTime = endTime - interval;
-      var intervalPx = canvas.width;
-      var timeMouse = interval * mousePos.x / intervalPx;
+      var widthCanvas = canvas.width;
+      var timeMouse = interval * mousePos.x / widthCanvas;
       timeMouse += startTime;
       timeMouse *= 60000;
-
-      /*console.log('interval = %d', interval);
-      console.log('endTime = %d', endTime);
-      console.log('startTime = %d', startTime);
-      console.log('intervalPx = %d', intervalPx);
-      console.log('timeMouse = %d', timeMouse);*/
-
-      var heightCanvas = canvas.height;
-
       var dateMouse = new Date(timeMouse);
+
+      // convertion de l'ordonnée en valeur
+      var heightCanvas = canvas.height;
+      var valeurMouse = mousePos.y * 100 / heightCanvas;
+
       //var jourStr = dateMouse.getDate() + '/' + dateMouse.getMonth() + '/' + dateMouse.getFullYear();
       //var heureStr = dateMouse.getHours() + ':' + dateMouse.getMinutes() + ':' + dateMouse.getSeconds();
       ctx.fillText(dateToString(dateMouse), mousePos.x + 10, heightCanvas - 6);
@@ -388,7 +384,66 @@ jQuery(document).ready(function($) {
 
 
       // recherche des points à proximité
-    }
+      var echelleX = widthCanvas / interval;
+      var echelleY = heightCanvas / 100; // de 0 à 100 en vertical
+      
+      var distanceMin = distance(0, 0, widthCanvas, heightCanvas);
+      var ptSelect = -1;
+      var ligneSelect = '';
+      for(nom in dataStorage.data){
+        var afficher = $('#settings input.'+nom).is(':checked');
+        
+        if(afficher){
+          //console.log('Recheche de point pour %s', nom);
+          for(i in dataStorage.data[nom]){
+            var timePt = dataStorage.data[nom][i].time / 60000; // en minutes
+            
+            var minutesX = timePt - startTime;
+            var x = minutesX * widthCanvas / interval;
+            var y = heightCanvas - dataStorage.data[nom][i].valeur * echelleY;
+
+            var dist = distance(mousePos.x, mousePos.y, x, y);
+            //console.log('distance pour le point %d = %d', i, dist);
+            if(dist < distanceMin){
+              ligneSelect = nom;
+              ptSelect = i;
+              distanceMin = dist;
+              //console.log('Nouvelle distanceMin = %d', distanceMin);
+            }
+          }
+          
+        }
+      }
+      if(ptSelect != -1 && distanceMin < 20){
+        ctx.strokeStyle = dataStorage.couleurs[ligneSelect];
+        ctx.fillStyle = dataStorage.couleurs[ligneSelect];
+        ctx.beginPath();
+
+        var timePt = dataStorage.data[ligneSelect][ptSelect].time / 60000; // en minutes
+        var minutesX = timePt - startTime;
+        var x = minutesX * widthCanvas / interval;
+        var y = heightCanvas - dataStorage.data[ligneSelect][ptSelect].valeur * echelleY;
+
+        ctx.arc(x, y, 5,0,2*Math.PI);
+        ctx.stroke(); 
+
+        ctx.beginPath();
+        ctx.moveTo(x + 10, y - 10);
+        ctx.lineTo(x + 30, y - 30);
+        ctx.stroke();
+        var datePt = new Date(dataStorage.data[ligneSelect][ptSelect].time);
+        var datePtStr = dateToString(datePt);
+        var message = dataStorage.data[ligneSelect][ptSelect].valeur + '  @  ' + datePtStr;
+        ctx.fillText(message, x + 33, y - 28);
+
+
+      }else{
+        // cercle position souris
+        ctx.beginPath();
+        ctx.arc(mousePos.x, mousePos.y, 5,0,2*Math.PI);
+        ctx.stroke();
+      }
+}
 
     function recCouleurs(){
       var couleursStr = '{'
@@ -433,4 +488,13 @@ function dateFromString(dateStr){
 
 function padStr(i) {
     return (i < 10) ? "0" + i : "" + i;
+}
+
+function distance(x1, y1, x2, y2){
+  var dx = x2 - x1;
+  var dy = y2 - y1;
+  var dx2 = dx * dx;
+  var dy2 = dy * dy;
+  var dist = Math.sqrt(dx2 + dy2);
+  return dist;
 }
