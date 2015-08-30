@@ -373,9 +373,14 @@ jQuery(document).ready(function($) {
       var heightCanvas = canvas.height;
       var valeurMouse = mousePos.y * 100 / heightCanvas;
 
-      //var jourStr = dateMouse.getDate() + '/' + dateMouse.getMonth() + '/' + dateMouse.getFullYear();
-      //var heureStr = dateMouse.getHours() + ':' + dateMouse.getMinutes() + ':' + dateMouse.getSeconds();
-      ctx.fillText(dateToString(dateMouse), mousePos.x + 10, heightCanvas - 6);
+      var jourStr = dateMouse.getDate() + '/' + dateMouse.getMonth() + '/' + dateMouse.getFullYear();
+      var heureStr = dateMouse.getHours() + ':' + dateMouse.getMinutes() + ':' + dateMouse.getSeconds();
+      var datePrint = dateToPrettyStr(dateMouse);
+      if(mousePos.x > (2 / 3 * widthCanvas)){
+        var longeurTxt = ctx.measureText(datePrint).width;
+        ctx.fillText(datePrint, mousePos.x - 10 - longeurTxt, heightCanvas - 6);
+      }else
+        ctx.fillText(datePrint, mousePos.x + 10, heightCanvas - 6);
       ctx.beginPath();
       var hauteurMouse = heightCanvas - mousePos.y;
       ctx.moveTo(mousePos.x, mousePos.y + (hauteurMouse / 3));
@@ -427,14 +432,29 @@ jQuery(document).ready(function($) {
         ctx.arc(x, y, 5,0,2*Math.PI);
         ctx.stroke(); 
 
-        ctx.beginPath();
-        ctx.moveTo(x + 10, y - 10);
-        ctx.lineTo(x + 30, y - 30);
-        ctx.stroke();
         var datePt = new Date(dataStorage.data[ligneSelect][ptSelect].time);
-        var datePtStr = dateToString(datePt);
+        var datePtStr = dateToPrettyStr(datePt);
         var message = dataStorage.data[ligneSelect][ptSelect].valeur + '  @  ' + datePtStr;
-        ctx.fillText(message, x + 33, y - 28);
+        var dimTxt = ctx.measureText(message).width;
+        if(mousePos.y < 50) posY = -1;
+        else posY = 1;
+        if(x  > widthCanvas * 2 / 3){
+          // affichage à gauche
+          ctx.beginPath();
+          ctx.moveTo(x - 10, y - (10 * posY));
+          ctx.lineTo(x - 30, y - (30 * posY));    
+          ctx.stroke();
+          ctx.clearRect(x - 36 - dimTxt, y - 8 - (30 * posY), dimTxt + 4, 16);
+          ctx.fillText(message, x - 35 - dimTxt, y + 4 - (30 * posY));
+        }else{
+          // affichage à droite
+          ctx.beginPath();
+          ctx.moveTo(x + 10, y - (10 * posY));
+          ctx.lineTo(x + 30, y - (30 * posY));
+          ctx.stroke();
+          ctx.clearRect(x + 30, y - 8 - (30 * posY), dimTxt + 4, 16);
+          ctx.fillText(message, x + 33, y + 4 - (30 * posY));
+        }
 
 
       }else{
@@ -468,6 +488,11 @@ jQuery(document).ready(function($) {
     }
 }); // FIN JQUERY
 
+function dateToPrettyStr(dateobj){
+  var jourStr = dateobj.getDate() + '/' + dateobj.getMonth() + '/' + dateobj.getFullYear();
+  var heureStr = dateobj.getHours() + ':' + dateobj.getMinutes() + ':' + dateobj.getSeconds();
+  return jourStr + '  ' + heureStr;
+}
 function dateToString(dateObj){
 	var dateStr = padStr(dateObj.getFullYear()) + '-' +
                   padStr(1 + dateObj.getMonth()) + '-' +
