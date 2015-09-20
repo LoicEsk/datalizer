@@ -96,6 +96,7 @@ function shortcode_datalizer($attr){
 			// config
 		</script>
 		<div class="loaderLayout"><span class="spinner"></span><br />Chargement ...</div>
+		<div class="layer-error">Datalizer</div>
 		<canvas id="graph" width="100%"></canvas>
 		<form id="settings">
 			<select id="interval">

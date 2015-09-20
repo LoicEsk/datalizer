@@ -121,6 +121,7 @@ jQuery(document).ready(function($) {
     })
     
     function getData(){
+      $('#datalizer .layer-error').hide();
       $('#datalizer .loaderLayout').show();
       
       // récupération des infos d'affichge
@@ -148,7 +149,7 @@ jQuery(document).ready(function($) {
       //console.log('Envoi des données : ', data);
 
   		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-  		$.post(datalizer_vars.ajax_url, data, function(response) {
+  		$.post(datalizer_vars.ajax_url, data).done(function(response) {
   			//console.log('Got this from the server: ' + response);
         var dataObj = $.parseJSON(response);
         
@@ -182,7 +183,12 @@ jQuery(document).ready(function($) {
         analyseData();
         drawGraph();
         $('#datalizer .loaderLayout').hide();
-  		});
+  		}).fail(function(){
+        // en cas d'echec
+        $('#datalizer .loaderLayout').hide();
+        $('#datalizer .layer-error').text('Erreur de chargement !');
+        $('#datalizer .layer-error').show();
+      });
     }
 
     function analyseData(){
