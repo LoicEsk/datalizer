@@ -496,7 +496,7 @@ jQuery(document).ready(function($) {
 
 function dateToPrettyStr(dateobj){
   var jourStr = dateobj.getDate() + '/' + dateobj.getMonth() + '/' + dateobj.getFullYear();
-  var heureStr = dateobj.getHours() + ':' + dateobj.getMinutes() + ':' + dateobj.getSeconds();
+  var heureStr = intToStr(dateobj.getHours(), 2) + ':' + intToStr(dateobj.getMinutes(), 2) + ':' + intToStr(dateobj.getSeconds(), 2);
   return jourStr + '  ' + heureStr;
 }
 function dateToString(dateObj){
@@ -528,4 +528,15 @@ function distance(x1, y1, x2, y2){
   var dy2 = dy * dy;
   var dist = Math.sqrt(dx2 + dy2);
   return dist;
+}
+
+function intToStr(valeur, nbChar){
+  var nbStr = "";
+
+  if(valeur < 10){
+    nbStr = "0" + valeur;
+  }else
+    nbStr = valeur;
+
+  return nbStr;
 }
