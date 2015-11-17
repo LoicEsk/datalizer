@@ -10,6 +10,12 @@ This plugin is hosted on github. You can use the GitHub Updater to install and u
 
 == Changelog ==
 
+== 0.3.1 ==
+Amélioration de l'affichage des dates. 
+Correction de la chronologie d'affichage des données. 
+Complément d'informations dans la page admin. 
+
+
 == 0.3.0 ==
 Affichage des valeurs au passage de la souris avec magnétisme sur la valeur plus proche
 

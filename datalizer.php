@@ -3,7 +3,7 @@
 Plugin Name: Datalizer
 Plugin URI: https://github.com/LoicEsk/datalizer
 Description: A plugin to view and analayse physical data
-Version: 0.3.0
+Version: 0.3.1
 Author: Loïc Laurent
 Author URI: http://loiclaurent.com
 License: GPLv2 or later
@@ -30,7 +30,7 @@ function datalizer_getData() {
 	$fromDate = $_POST['fromDate'];
 	$toDate = $_POST['toDate'];
 
-	$resultats = $wpdb->get_results( "SELECT * FROM $datalizer_table WHERE time BETWEEN '$fromDate' AND '$toDate'" );
+	$resultats = $wpdb->get_results( "SELECT * FROM $datalizer_table WHERE time BETWEEN '$fromDate' AND '$toDate' ORDER BY time" );
 	echo(json_encode($resultats));
 
 	wp_die(); // this is required to terminate immediately and return a proper response

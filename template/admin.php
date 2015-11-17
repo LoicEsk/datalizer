@@ -5,6 +5,8 @@
 	global $datalizer_table;
 
 	$compte = $wpdb->get_var( "SELECT COUNT(*) FROM $datalizer_table" );
+	$premiereDate = $wpdb->get_var("SELECT time FROM $datalizer_table ORDER BY time LIMIT 1");
+	$derniereDate = $wpdb->get_var("SELECT time FROM $datalizer_table ORDER BY time DESC LIMIT 1");
 ?>
 <div class="wrap">
 	<h2>Menthe à l'eau</h2>
@@ -16,7 +18,8 @@
 				<ul>
 					<li>Version bdd : <strong><?php echo($datalizer_db_version); ?></strong></li>
 					<li>Nombre d'entrées : <strong><?php echo($compte); ?></strong></li>
-
+					<li>La plus ancienne valeur en base date du <strong><?php echo($premiereDate); ?></strong></li>
+					<li>La plus récente date du <strong><?php echo($derniereDate); ?></strong></li>
 				</ul>
 			</div>
 		</div>
@@ -33,9 +36,11 @@
 					{ 
 					    'action': 'datalizer_setData',
 					  'donnee' : donnee,
-					  'valeur' : valeur 
+					  'valeur' : valeur,
+					  'date' : date
 					}
 				</code>
+				<p>La date est optionnelle. Si elle est omise, celle du serveur au moment de la requette sera utilisée. Elle doit être au format Y-m-d H:i:s</p>
 			</div>
 		</div>
 	</div>
