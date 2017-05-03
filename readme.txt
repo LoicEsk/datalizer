@@ -10,6 +10,9 @@ This plugin is hosted on github. You can use the GitHub Updater to install and u
 
 == Changelog ==
 
+== 0.4 ==
+Sécurisation des données entrantes
+
 == 0.3.1 ==
 Amélioration de l'affichage des dates. 
 Correction de la chronologie d'affichage des données. 

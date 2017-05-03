@@ -3,7 +3,7 @@
 Plugin Name: Datalizer
 Plugin URI: https://github.com/LoicEsk/datalizer
 Description: A plugin to view and analayse physical data
-Version: 0.3.1
+Version: 0.4.0
 Author: Loïc Laurent
 Author URI: http://loiclaurent.com
 License: GPLv2 or later
@@ -48,6 +48,13 @@ function datalizer_setData() {
 		$date = $_POST['date'];
 	$nom = $_POST['donnee'];
 	$valeur = $_POST['valeur'];
+
+	// nettoyage données
+	$nom = sanitize_text_field( $nom );
+	$valeur = sanitize_text_field( $valeur );
+
+	$nom = str_replace( '\n', '', $nom);
+	$nom = str_replace( '\r', '', $nom);
 
 	$wpdb->query( $wpdb->prepare( 
 		"INSERT INTO $datalizer_table VALUES ( '', %s, %s, %s )", 
